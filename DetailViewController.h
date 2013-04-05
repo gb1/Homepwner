@@ -24,6 +24,8 @@
 //property so we can synt it :-)
 @property (nonatomic, strong) BNRItem *item;
 
+@property (nonatomic, copy) void (^dimissBlock)(void);
+
 - (IBAction)takePicture:(id)sender;
 - (IBAction)backgroundTapped:(id)sender;
 

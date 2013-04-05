@@ -10,7 +10,7 @@
 
 @class BNRItem;
 
-@interface BNRItem : NSObject{
+@interface BNRItem : NSObject<NSCoding>{
     //instance variables
     NSString *itemName;
     NSString *serialNumber;

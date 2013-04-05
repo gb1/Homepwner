@@ -9,6 +9,7 @@
 #import "DetailViewController.h"
 #import "BNRItem.h"
 #import "BNRImageStore.h"
+#import "BNRItemStore.h"
 
 @interface DetailViewController ()
 
@@ -17,6 +18,7 @@
 @implementation DetailViewController
 
 @synthesize item;
+@synthesize dimissBlock;
 
 -(id)initForNewItem:(BOOL)isNew{
     self = [super initWithNibName:@"DetailViewController" bundle:nil];
@@ -177,6 +179,16 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
+}
+
+-(void)save:(id)sender{
+    [[self presentingViewController]dismissViewControllerAnimated:YES completion:dimissBlock];
+    
+}
+
+-(void)cancel:(id)sender{
+    [[BNRItemStore sharedStore]removeItem:item];
+    [[self presentingViewController]dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

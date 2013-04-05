@@ -27,7 +27,15 @@
 -(id)init{
     self = [super init];
     if(self){
-        allItems = [[NSMutableArray alloc]init];
+        //allItems = [[NSMutableArray alloc]init];
+        
+        NSString *path = [self itemArchivePath];
+        allItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        
+        if(!allItems){
+            allItems = [[NSMutableArray alloc]init];
+        }
+        
     }
     
     return self;
@@ -55,6 +63,21 @@
     
     [allItems removeObjectAtIndex:from];
     [allItems insertObject:p atIndex:to];
+}
+
+-(NSString  *)itemArchivePath{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    
+    //get the only dir from the list
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    return documentDirectory;
+}
+
+-(BOOL)saveChanges{
+    //returns success or failure
+    NSString *path = [self itemArchivePath];
+    
+    return [NSKeyedArchiver archiveRootObject:allItems toFile:path];
 }
 
 
